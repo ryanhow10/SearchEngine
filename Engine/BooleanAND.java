@@ -129,10 +129,11 @@ public class BooleanAND {
 	}
 	
 	/**
-	 * This method attempts to deserialize and fetch the auxiliary maps stored on disk.
+	 * This method attempts to deserialize and fetch the auxiliary maps stored on
+	 * disk.
 	 * 
-	 * @param filePath	the path of the file holding the map
-	 * @return			the map or null on error
+	 * @param filePath the path of the file holding the map
+	 * @return the map or null on error
 	 */
 	private static Map getMap(String filePath){
 		Map map = null;
