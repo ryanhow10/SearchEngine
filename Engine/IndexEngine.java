@@ -9,7 +9,6 @@
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -78,10 +77,10 @@ public class IndexEngine {
 		}
 		
 		//Formatting 
-		StringBuffer formattedPathToIndex = new StringBuffer();
-		formattedPathToIndex.append(args[1]);
-		if(formattedPathToIndex.charAt(formattedPathToIndex.length() - 1) != '/') {
-			formattedPathToIndex.append('/');
+		StringBuffer formattedPathToIndexDirectory = new StringBuffer();
+		formattedPathToIndexDirectory.append(args[1]);
+		if(formattedPathToIndexDirectory.charAt(formattedPathToIndexDirectory.length() - 1) != '/') {
+			formattedPathToIndexDirectory.append('/');
 		}
 		
 		//Read provided gzipped file
@@ -132,7 +131,7 @@ public class IndexEngine {
 				String date = getDateFromDocNo(docNo);
 				
 				//Store document in provided directory
-				boolean docStoreSuccess = storeDocument(docSb.toString(), docNo, formattedPathToIndex.toString(), date);
+				boolean docStoreSuccess = storeDocument(docSb.toString(), docNo, formattedPathToIndexDirectory.toString(), date);
 				if(!docStoreSuccess) {
 					LOGGER.log(Level.SEVERE, "Error storing document on disk.");
 					return;
@@ -157,7 +156,7 @@ public class IndexEngine {
 		
 		// Write serialized data structures to disk
 		StringBuffer metadataFileName = new StringBuffer();
-		metadataFileName.append(formattedPathToIndex.toString());
+		metadataFileName.append(formattedPathToIndexDirectory.toString());
 		metadataFileName.append(METADATA_FILE_NAME);
 
 		boolean storeMetadataSuccess = storeMap(metadataMap, metadataFileName.toString());
@@ -167,7 +166,7 @@ public class IndexEngine {
 		}
 
 		StringBuffer lexiconFileName = new StringBuffer();
-		lexiconFileName.append(formattedPathToIndex.toString());
+		lexiconFileName.append(formattedPathToIndexDirectory.toString());
 		lexiconFileName.append(LEXICON_FILE_NAME);
 
 		boolean storeLexiconSuccess = storeMap(lexicon, lexiconFileName.toString());
@@ -177,7 +176,7 @@ public class IndexEngine {
 		}
 
 		StringBuffer invertedIndexFileName = new StringBuffer();
-		invertedIndexFileName.append(formattedPathToIndex.toString());
+		invertedIndexFileName.append(formattedPathToIndexDirectory.toString());
 		invertedIndexFileName.append(INVERTED_INDEX_FILE_NAME);
 
 		boolean invertedIndexStoreSuccess = storeMap(invertedIndex, invertedIndexFileName.toString());
@@ -193,8 +192,8 @@ public class IndexEngine {
 	 * This method attempts to parse the provided string representation of the document to
 	 * an XML representation.
 	 * 
-	 * @param	document  the string representation of the document
-	 * @return			  the document parsed to XML or null on error
+	 * @param	document	the string representation of the document
+	 * @return				the document parsed to XML or null on error
 	 */
 	private static Document getXmlDocument(String document) {
 		if (document == null || document.length() == 0) {
@@ -218,8 +217,8 @@ public class IndexEngine {
 	 * This method extracts the text content of a document from the TEXT, HEADLINE and 
 	 * GRAPHIC tags. All tags within these tags are also removed. 
 	 * 
-	 * @param	xml  the XML representation of the document	
-	 * @return		 the text of a document or an empty string on error 
+	 * @param	xml		the XML representation of the document	
+	 * @return			the text of a document or an empty string on error 
 	 */
 	private static String getTextFromXml(Document xml) {
 		if (xml == null) {
@@ -261,8 +260,8 @@ public class IndexEngine {
 	 * 1. Downcase text
 	 * 2. Split on non-alphanumerics
 	 * 
-	 * @param	text  the text content of the document
-	 * @return		  the list of string tokens or null on error	    
+	 * @param	text	the text content of the document
+	 * @return			the list of string tokens or null on error	    
 	 */
 	private static List<String> tokenize(String text) {
 		if (text == null || text.length() == 0) {
@@ -293,8 +292,8 @@ public class IndexEngine {
 	/**
 	 * This method applies the Porter Stemmer on a list of tokens.
 	 * 
-	 * @param tokens  the list of tokens to be stemmed
-	 * @return		  the list of stemmed tokens or null on error
+	 * @param tokens	the list of tokens to be stemmed
+	 * @return			the list of stemmed tokens or null on error
 	 */
 	private static List<String> stem(List<String> tokens) {
 		if (tokens == null || tokens.size() == 0) {
@@ -384,8 +383,8 @@ public class IndexEngine {
 	/**
 	 * This method obtains the docno value from the XML representation of the document.
 	 * 
-	 * @param xml  the XML representation of the document
-	 * @return	   the docno of the document or an empty string on error
+	 * @param xml	the XML representation of the document
+	 * @return	   	the docno of the document or an empty string on error
 	 */
 	private static String getDocNoFromXml(Document xml) {
 		if (xml == null) {
@@ -403,8 +402,8 @@ public class IndexEngine {
 	/**
 	 * This method obtains the headline value from the XML representation of the document.
 	 * 
-	 * @param xml  the XML representation of the document
-	 * @return	   the headline of the document or an empty string on error
+	 * @param xml	the XML representation of the document
+	 * @return		the headline of the document or an empty string on error
 	 */
 	private static String getHeadlineFromXml(Document xml) {
 		if (xml == null) {
@@ -505,7 +504,4 @@ public class IndexEngine {
 		}
 		return true;
 	}
-	
-	
-	
 }
