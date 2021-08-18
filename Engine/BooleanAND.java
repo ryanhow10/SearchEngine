@@ -154,11 +154,11 @@ public class BooleanAND {
 	
 	/**
 	 * This method applies a tokenization scheme (see below) on the provided text.
-	 * 1. Downcase text
+	 * 1. Downcase text 
 	 * 2. Split on non-alphanumerics
 	 * 
-	 * @param	text	the text content of the document
-	 * @return			the list of string tokens or null on error	    
+	 * @param text the text content of the document
+	 * @return the list of string tokens or null on error
 	 */
 	private static List<String> tokenize(String text) {
 		if (text == null || text.length() == 0) {
@@ -189,8 +189,8 @@ public class BooleanAND {
 	/**
 	 * This method applies the Porter Stemmer on a list of tokens.
 	 * 
-	 * @param tokens	the list of tokens to be stemmed
-	 * @return			the list of stemmed tokens or null on error
+	 * @param tokens the list of tokens to be stemmed
+	 * @return the list of stemmed tokens or null on error
 	 */
 	private static List<String> stem(List<String> tokens) {
 		if (tokens == null || tokens.size() == 0) {
@@ -205,11 +205,12 @@ public class BooleanAND {
 	}
 	
 	/**
-	 * This method makes use of the lexicon to obtain the unique token ids from the token strings.
+	 * This method makes use of the lexicon to obtain the unique token ids from the
+	 * token strings.
 	 * 
-	 * @param tokens	the list of token strings
-	 * @param lexicon	the map from the token string to token id
-	 * @return			the list of token ids or null on error
+	 * @param tokens  the list of token strings
+	 * @param lexicon the map from the token string to token id
+	 * @return the list of token ids or null on error
 	 */
 	private static List<Integer> getTokenIdsFromTokens(List<String> tokens, Map<String, Integer> lexicon) {
 		if(tokens == null || tokens.size() == 0 || lexicon == null || lexicon.size() == 0) {
@@ -229,11 +230,12 @@ public class BooleanAND {
 	}
 	
 	/**
-	 * This method obtains the internal ids of documents fulfilling the booleanAND condition.
+	 * This method obtains the internal ids of documents fulfilling the booleanAND
+	 * condition.
 	 * 
-	 * @param tokenIds		the list of token ids
-	 * @param invertedIndex	the map from token id to postings list (internalId, docno, internalId, docno,...)
-	 * @return				the list of internal ids
+	 * @param tokenIds      the list of token ids
+	 * @param invertedIndex the map from token id to postings list (internalId, docno, internalId, docno,...)
+	 * @return the list of internal ids
 	 */
 	private static List<Integer> getInternalIds(List<Integer> tokenIds, Map<Integer, List<Integer>> invertedIndex) {
 		List<Integer> internalIds = new ArrayList<>(); 
@@ -254,9 +256,9 @@ public class BooleanAND {
 	/**
 	 * This method obtains the intersection elements between two lists.
 	 * 
-	 * @param l1	the first list
-	 * @param l2	the second list
-	 * @return		the list of intersection elements
+	 * @param l1 the first list
+	 * @param l2 the second list
+	 * @return the list of intersection elements
 	 */
 	private static List<Integer> intersect(List<Integer> l1, List<Integer> l2) {
 		List<Integer> intersect = new ArrayList<>();
@@ -280,10 +282,10 @@ public class BooleanAND {
 	}
 	
 	/**
-	 * This method obtains only the internal ids. 
+	 * This method obtains only the internal ids.
 	 * 
-	 * @param list	the list of elements alternating between the internal id and a placeholder value (-1)
-	 * @return		the list of internal ids
+	 * @param list the list of elements alternating between the internal id and a placeholder value (-1)
+	 * @return the list of internal ids
 	 */
 	private static List<Integer> onlyInternalIds(List<Integer> list) {
 		List<Integer> internalIds = new ArrayList<>();
@@ -295,15 +297,15 @@ public class BooleanAND {
 	}
 	
 	/**
-	 * This method appends a result in a specified format (see below) to the results.
-	 * The result is formatted in the following format
+	 * This method appends a result in a specified format (see below) to the
+	 * results. The result is formatted in the following format 
 	 * topicId Q0 docno rank score rykhowteAND
 	 * 
-	 * @param results		the string buffer holding all results
-	 * @param topicId		the topic id for the query
-	 * @param internalIds	the internal ids of the documents retrieved
-	 * @param metadataMap	the map from internal id to metadata (docno, headline, date, length)
-	 * @return				true on success, false on error
+	 * @param results     the string buffer holding all results
+	 * @param topicId     the topic id for the query
+	 * @param internalIds the internal ids of the documents retrieved
+	 * @param metadataMap the map from internal id to metadata (docno, headline, date, length)
+	 * @return true on success, false on error
 	 */
 	private static boolean addToResults(StringBuffer results, int topicId, List<Integer> internalIds, Map<Integer, List<String>> metadataMap) {
 		if(results == null || topicId < 0 || internalIds == null || metadataMap == null || metadataMap.size() == 0) {
@@ -330,9 +332,9 @@ public class BooleanAND {
 	/**
 	 * This method writes the results to disk at the provided file.
 	 * 
-	 * @param results	the results from booleanAND retrieval
-	 * @param file		the file to write the results to
-	 * @return			true on success, false on error
+	 * @param results the results from booleanAND retrieval
+	 * @param file    the file to write the results to
+	 * @return true on success, false on error
 	 */
 	private static boolean writeResults(String results, String file) {
 		File f = new File(file);

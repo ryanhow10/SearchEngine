@@ -189,11 +189,11 @@ public class IndexEngine {
 	}
 	
 	/**
-	 * This method attempts to parse the provided string representation of the document to
-	 * an XML representation.
+	 * This method attempts to parse the provided string representation of the
+	 * document to an XML representation.
 	 * 
-	 * @param	document	the string representation of the document
-	 * @return				the document parsed to XML or null on error
+	 * @param document the string representation of the document
+	 * @return the document parsed to XML or null on error
 	 */
 	private static Document getXmlDocument(String document) {
 		if (document == null || document.length() == 0) {
@@ -214,11 +214,11 @@ public class IndexEngine {
 	}
 	
 	/**
-	 * This method extracts the text content of a document from the TEXT, HEADLINE and 
-	 * GRAPHIC tags. All tags within these tags are also removed. 
+	 * This method extracts the text content of a document from the TEXT, HEADLINE
+	 * and GRAPHIC tags. All tags within these tags are also removed.
 	 * 
-	 * @param	xml		the XML representation of the document	
-	 * @return			the text of a document or an empty string on error 
+	 * @param xml the XML representation of the document
+	 * @return the text of a document or an empty string on error
 	 */
 	private static String getTextFromXml(Document xml) {
 		if (xml == null) {
@@ -257,11 +257,11 @@ public class IndexEngine {
 	
 	/**
 	 * This method applies a tokenization scheme (see below) on the provided text.
-	 * 1. Downcase text
+	 * 1. Downcase text 
 	 * 2. Split on non-alphanumerics
 	 * 
-	 * @param	text	the text content of the document
-	 * @return			the list of string tokens or null on error	    
+	 * @param text the text content of the document
+	 * @return the list of string tokens or null on error
 	 */
 	private static List<String> tokenize(String text) {
 		if (text == null || text.length() == 0) {
@@ -292,8 +292,8 @@ public class IndexEngine {
 	/**
 	 * This method applies the Porter Stemmer on a list of tokens.
 	 * 
-	 * @param tokens	the list of tokens to be stemmed
-	 * @return			the list of stemmed tokens or null on error
+	 * @param tokens the list of tokens to be stemmed
+	 * @return the list of stemmed tokens or null on error
 	 */
 	private static List<String> stem(List<String> tokens) {
 		if (tokens == null || tokens.size() == 0) {
@@ -308,11 +308,12 @@ public class IndexEngine {
 	}
 	
 	/**
-	 * This method converts the token strings to integer ids with the help of the lexicon.
+	 * This method converts the token strings to integer ids with the help of the
+	 * lexicon.
 	 * 
-	 * @param tokens	the list of token strings to be converted
-	 * @param lexicon	the mapping from token string to token id
-	 * @return			the list of token ids or null on error
+	 * @param tokens  the list of token strings to be converted
+	 * @param lexicon the mapping from token string to token id
+	 * @return the list of token ids or null on error
 	 */
 	private static List<Integer> convertTokensToIds(List<String> tokens, Map<String, Integer> lexicon) {
 		if(tokens == null || tokens.size() == 0 || lexicon == null) {
@@ -335,8 +336,8 @@ public class IndexEngine {
 	/**
 	 * This method counts the occurrences of each token id.
 	 * 
-	 * @param tokenIds	the list of token ids
-	 * @return			the map from the token id to the count of it or null on error
+	 * @param tokenIds the list of token ids
+	 * @return the map from the token id to the count of it or null on error
 	 */
 	private static Map<Integer, Integer> countWords(List<Integer> tokenIds) {
 		if(tokenIds == null || tokenIds.size() == 0) {
@@ -355,11 +356,12 @@ public class IndexEngine {
 	}
 	
 	/**
-	 * This method adds entries to the postings list for the document as well as the inverted index.
+	 * This method adds entries to the postings list for the document as well as the
+	 * inverted index.
 	 * 
-	 * @param wordCounts	the map from the token id to the count of it
-	 * @param internalId	the internal id of the document
-	 * @param invertedIndex	the map from internal id to the postings list 
+	 * @param wordCounts    the map from the token id to the count of it
+	 * @param internalId    the internal id of the document
+	 * @param invertedIndex the map from internal id to the postings list
 	 */
 	private static void addToPostings(Map<Integer, Integer> wordCounts, int internalId, Map<Integer, List<Integer>> invertedIndex) {
 		if(wordCounts == null || wordCounts.size() == 0 || internalId < 0 || invertedIndex == null) {
@@ -381,10 +383,11 @@ public class IndexEngine {
 	}
 	
 	/**
-	 * This method obtains the docno value from the XML representation of the document.
+	 * This method obtains the docno value from the XML representation of the
+	 * document.
 	 * 
-	 * @param xml	the XML representation of the document
-	 * @return	   	the docno of the document or an empty string on error
+	 * @param xml the XML representation of the document
+	 * @return the docno of the document or an empty string on error
 	 */
 	private static String getDocNoFromXml(Document xml) {
 		if (xml == null) {
@@ -400,10 +403,11 @@ public class IndexEngine {
 	}
 
 	/**
-	 * This method obtains the headline value from the XML representation of the document.
+	 * This method obtains the headline value from the XML representation of the
+	 * document.
 	 * 
-	 * @param xml	the XML representation of the document
-	 * @return		the headline of the document or an empty string on error
+	 * @param xml the XML representation of the document
+	 * @return the headline of the document or an empty string on error
 	 */
 	private static String getHeadlineFromXml(Document xml) {
 		if (xml == null) {
@@ -424,10 +428,10 @@ public class IndexEngine {
 	}
 	
 	/**
-	 * This method obtains the date embedded in the docno of the document. 
+	 * This method obtains the date embedded in the docno of the document.
 	 * 
-	 * @param docNo	the docno of the document
-	 * @return		the embedded date or an empty string on error
+	 * @param docNo the docno of the document
+	 * @return the embedded date or an empty string on error
 	 */
 	private static String getDateFromDocNo(String docNo) {
 		if (docNo == null || docNo.length() == 0) {
@@ -440,11 +444,11 @@ public class IndexEngine {
 	/**
 	 * This method attempts to store the document on disk at the directory mm/dd/yy.
 	 * 
-	 * @param document		the string representation of the document
-	 * @param docNo			the docno of the document
-	 * @param directoryPath	the directory of the index
-	 * @param date			the date obtained from the docno
-	 * @return				true on success, false on error
+	 * @param document      the string representation of the document
+	 * @param docNo         the docno of the document
+	 * @param directoryPath the directory of the index
+	 * @param date          the date obtained from the docno
+	 * @return true on success, false on error
 	 */
 	private static boolean storeDocument(String document, String docNo, String directoryPath, String date) {
 		if(document == null || document.length() == 0 || docNo == null || docNo.length() == 0 || directoryPath == null || directoryPath.length() == 0 || date == null || date.length() == 0) {
@@ -485,11 +489,11 @@ public class IndexEngine {
 	}
 	
 	/**
-	 * This method attempts to store the provided map on disk 
+	 * This method attempts to store the provided map on disk
 	 * 
-	 * @param content	the map to store 
-	 * @param fileName	the name of the file to write to disk
-	 * @return			true on success, false on error
+	 * @param content  the map to store
+	 * @param fileName the name of the file to write to disk
+	 * @return true on success, false on error
 	 */
 	private static boolean storeMap(Map content, String fileName) {
 		try {
