@@ -36,7 +36,7 @@ import org.xml.sax.InputSource;
 
 public class IndexEngine {
 	
-	private static Logger LOGGER = Logger.getLogger(IndexEngine.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(IndexEngine.class.getName());
 	public static String DOC_END_TAG = "</DOC>";
 	public static String DOCNO_TAG_NAME = "DOCNO";
 	public static String HEADLINE_TAG_NAME = "HEADLINE";

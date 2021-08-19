@@ -25,13 +25,13 @@ import java.util.logging.Logger;
 
 public class BooleanAND {
 	
-	private static Logger LOGGER = Logger.getLogger(BooleanAND.class.getName()); 
+	private static final Logger LOGGER = Logger.getLogger(BooleanAND.class.getName()); 
 	public static String METADATA_FILE_NAME = "metadata.txt";
 	public static String LEXICON_FILE_NAME = "lexicon.txt";
 	public static String INVERTED_INDEX_FILE_NAME = "invertedIndex.txt";
 	public static int DOCNO_INDEX = 0;
 	
-	public static void main(String args[]) throws FileNotFoundException{
+	public static void main(String args[]) throws FileNotFoundException {
 		
 		if(args.length != 3) { 
 			LOGGER.log(Level.SEVERE, "Invalid input. Usage: 'java " + BooleanAND.class.getName() + " <PATH_TO_INDEX_DIRECTORY> <PATH_TO_QUERIES_FILE> <OUTPUT_FILE_NAME>'");
@@ -299,7 +299,7 @@ public class BooleanAND {
 	/**
 	 * This method appends a result in a specified format (see below) to the
 	 * results. The result is formatted in the following format 
-	 * topicId Q0 docno rank score rykhowteAND
+	 * topicId Q0 docno rank score BooleanAND
 	 * 
 	 * @param results     the string buffer holding all results
 	 * @param topicId     the topic id for the query
@@ -323,7 +323,7 @@ public class BooleanAND {
 			results.append(" ");
 			results.append(internalIds.size() - i);
 			results.append(" ");
-			results.append("rykhowteAND");
+			results.append("BooleanAND");
 			results.append("\n");
 		}
 		return true;
