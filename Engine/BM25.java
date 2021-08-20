@@ -26,7 +26,7 @@ import java.util.logging.Logger;
 
 public class BM25 {
 
-	private static Logger LOGGER = Logger.getLogger(BM25.class.getName());
+	private static final Logger LOGGER = Logger.getLogger(BM25.class.getName());
 	public static String METADATA_FILE_NAME = "metadata.txt";
 	public static String LEXICON_FILE_NAME = "lexicon.txt";
 	public static String INVERTED_INDEX_FILE_NAME = "invertedIndex.txt";
@@ -141,6 +141,10 @@ public class BM25 {
 	 * @return the map or null on error
 	 */
 	private static Map getMap(String filePath){
+		if(filePath == null || filePath.length() == 0) {
+			LOGGER.log(Level.SEVERE, "filePath provided to getMap was null or empty.");
+			return null;
+		}
 		Map map = null;
 		FileInputStream fis;
 		ObjectInputStream ois;
@@ -152,7 +156,7 @@ public class BM25 {
 			ois.close();
 			fis.close();
 		} catch(Exception e) {
-			LOGGER.log(Level.SEVERE, "Error getting map from disk.");
+			LOGGER.log(Level.SEVERE, "Error getting map from disk. " + e.getMessage());
 		}
 		return map;
 	}
@@ -166,7 +170,7 @@ public class BM25 {
 	 */
 	private static double getAverageDocLength(Map<Integer, List<String>> metadataMap) {
 		if(metadataMap == null || metadataMap.size() == 0) {
-			LOGGER.log(Level.SEVERE, "metadata map provided to getAverageDocLength was null or empty.");
+			LOGGER.log(Level.SEVERE, "metadataMap provided to getAverageDocLength was null or empty.");
 			return -1.0;
 		}
 		double totalDocLengths = 0;
@@ -331,9 +335,13 @@ public class BM25 {
 	 * @param numberOfDocsContainingToken the number of documents in the collection containing the token
 	 * @param averageDocLength            the average document length in the collection
 	 * @param numDocs                     the number of documents in the collection
-	 * @return the BM25 score
+	 * @return the BM25 score or -1.0 on error
 	 */
 	private static double calculateBM25(int frequencyInDoc, int docLength, int frequencyInQuery, int numberOfDocsContainingToken, double averageDocLength, int numDocs) {
+		if(frequencyInDoc < 0 || docLength < 0 || frequencyInQuery < 0 || numberOfDocsContainingToken < 0 || averageDocLength < 0 || numDocs < 0) {
+			LOGGER.log(Level.SEVERE, "Invalid input provided to calculateBM25.");
+			return -1.0;
+		}
 		double K = k1 * ((1 - b) + b  * (docLength / averageDocLength));
 		return (((k1 + 1) * frequencyInDoc) / (K + frequencyInDoc)) * (((k2 + 1) * frequencyInQuery) / (k2 + frequencyInQuery)) * Math.log((numDocs - numberOfDocsContainingToken + 0.5) / (numberOfDocsContainingToken + 0.5));
 	}
@@ -347,7 +355,7 @@ public class BM25 {
 	 */
 	private static AccumulatorEntry[] getSortedAccumulatorEntries(Map<Integer, Double> accumulatorMap) {
 		if(accumulatorMap == null || accumulatorMap.size() == 0) {
-			LOGGER.log(Level.SEVERE, "accumulator map provided to getSortedAccumulatorEntries was null or empty.");
+			LOGGER.log(Level.SEVERE, "accumulatorMap provided to getSortedAccumulatorEntries was null or empty.");
 			return null;
 		}
 		List<AccumulatorEntry> accumulatorEntriesList = new ArrayList<>();
@@ -408,6 +416,10 @@ public class BM25 {
 	 * @return true on success, false on error
 	 */
 	private static boolean writeResults(String results, String fileName) {
+		if(results == null || fileName == null) {
+			LOGGER.log(Level.SEVERE, "Invalid input provided to writeResults.");
+			return false;
+		}
 		File f = new File(fileName);
 		FileWriter fw;
 

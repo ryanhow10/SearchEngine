@@ -136,6 +136,10 @@ public class BooleanAND {
 	 * @return the map or null on error
 	 */
 	private static Map getMap(String filePath){
+		if(filePath == null || filePath.length() == 0) {
+			LOGGER.log(Level.SEVERE, "filePath provided to getMap was null or empty.");
+			return null;
+		}
 		Map map = null;
 		FileInputStream fis;
 		ObjectInputStream ois;
@@ -147,7 +151,7 @@ public class BooleanAND {
 			ois.close();
 			fis.close();
 		} catch(Exception e) {
-			LOGGER.log(Level.SEVERE, "Error getting map from disk.");
+			LOGGER.log(Level.SEVERE, "Error getting map from disk. " + e.getMessage());
 		}
 		return map;
 	}
@@ -235,9 +239,13 @@ public class BooleanAND {
 	 * 
 	 * @param tokenIds      the list of token ids
 	 * @param invertedIndex the map from token id to postings list (internalId, docno, internalId, docno,...)
-	 * @return the list of internal ids
+	 * @return the list of internal ids or null on error
 	 */
 	private static List<Integer> getInternalIds(List<Integer> tokenIds, Map<Integer, List<Integer>> invertedIndex) {
+		if(tokenIds == null || invertedIndex == null) {
+			LOGGER.log(Level.SEVERE, "Invalid input provided to getInternalIds.");
+			return null;
+		}
 		List<Integer> internalIds = new ArrayList<>(); 
 		if(tokenIds.size() == 0) { //Return empty list if no tokenIds
 			return internalIds;
@@ -258,9 +266,13 @@ public class BooleanAND {
 	 * 
 	 * @param l1 the first list
 	 * @param l2 the second list
-	 * @return the list of intersection elements
+	 * @return the list of intersection elements or null on error
 	 */
 	private static List<Integer> intersect(List<Integer> l1, List<Integer> l2) {
+		if(l1 == null || l2 == null) {
+			LOGGER.log(Level.SEVERE, "Invalid input provided to intersect.");
+			return null;
+		}
 		List<Integer> intersect = new ArrayList<>();
 		int i = 0;
 		int j = 0;
@@ -285,9 +297,13 @@ public class BooleanAND {
 	 * This method obtains only the internal ids.
 	 * 
 	 * @param list the list of elements alternating between the internal id and a placeholder value (-1)
-	 * @return the list of internal ids
+	 * @return the list of internal ids or null on error
 	 */
 	private static List<Integer> onlyInternalIds(List<Integer> list) {
+		if(list == null) {
+			LOGGER.log(Level.SEVERE, "list provded to onlyInternalIds was null or empty.");
+			return null;
+		}
 		List<Integer> internalIds = new ArrayList<>();
 		for (int i = 0; i < list.size(); i++) {
 			internalIds.add(list.get(i));
@@ -337,6 +353,10 @@ public class BooleanAND {
 	 * @return true on success, false on error
 	 */
 	private static boolean writeResults(String results, String file) {
+		if(results == null || file == null) {
+			LOGGER.log(Level.SEVERE, "Invalid input provided to writeResults.");
+			return false;
+		}
 		File f = new File(file);
 		FileWriter fw;
 		
@@ -346,7 +366,7 @@ public class BooleanAND {
 			fw.write(results); 
 			fw.close(); 
 		} catch (Exception e) {
-			LOGGER.log(Level.SEVERE, "Error writing results file to disk.");
+			LOGGER.log(Level.SEVERE, "Error writing results file to disk. " + e.getMessage());
 			return false;
 		}
 		return true;

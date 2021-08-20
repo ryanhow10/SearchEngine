@@ -222,7 +222,7 @@ public class IndexEngine {
 	 */
 	private static String getTextFromXml(Document xml) {
 		if (xml == null) {
-			LOGGER.log(Level.SEVERE, "XML document provided to getTextFromXml was null.");
+			LOGGER.log(Level.SEVERE, "xml provided to getTextFromXml was null.");
 			return "";
 		}
 		StringBuffer textContent = new StringBuffer();
@@ -411,7 +411,7 @@ public class IndexEngine {
 	 */
 	private static String getHeadlineFromXml(Document xml) {
 		if (xml == null) {
-			LOGGER.log(Level.SEVERE, "XML document provided to getHeadlineFromXml was null.");
+			LOGGER.log(Level.SEVERE, "xml provided to getHeadlineFromXml was null.");
 			return "";
 		}
 		NodeList nodeList = xml.getElementsByTagName(HEADLINE_TAG_NAME);
@@ -496,6 +496,10 @@ public class IndexEngine {
 	 * @return true on success, false on error
 	 */
 	private static boolean storeMap(Map content, String fileName) {
+		if(content == null || fileName == null || fileName.length() == 0) {
+			LOGGER.log(Level.SEVERE, "Invalid input provided to storeMap.");
+			return false;
+		}
 		try {
 			FileOutputStream fos = new FileOutputStream(fileName);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
