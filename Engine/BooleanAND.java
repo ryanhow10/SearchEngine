@@ -242,7 +242,7 @@ public class BooleanAND {
 	 * @return the list of internal ids or null on error
 	 */
 	private static List<Integer> getInternalIds(List<Integer> tokenIds, Map<Integer, List<Integer>> invertedIndex) {
-		if(tokenIds == null || invertedIndex == null) {
+		if(tokenIds == null || invertedIndex == null || invertedIndex.size() == 0) {
 			LOGGER.log(Level.SEVERE, "Invalid input provided to getInternalIds.");
 			return null;
 		}

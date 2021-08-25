@@ -316,7 +316,7 @@ public class IndexEngine {
 	 * @return the list of token ids or null on error
 	 */
 	private static List<Integer> convertTokensToIds(List<String> tokens, Map<String, Integer> lexicon) {
-		if(tokens == null || tokens.size() == 0 || lexicon == null) {
+		if(tokens == null || tokens.size() == 0 || lexicon == null || lexicon.size() == 0) {
 			LOGGER.log(Level.SEVERE, "Invalid input provided to convertTokensToIds.");
 			return null;
 		}
