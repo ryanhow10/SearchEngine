@@ -1,3 +1,5 @@
+# Search Engine
+
 **NOTE:** The search engine utilizes the 1989-1990 LATimes collection for retrieval.
 
 ---
